@@ -1,13 +1,15 @@
 from django.test import Client
-from stampu.utils import mkdir_recursive, rmdir
 from StringIO import StringIO
 from lxml import etree
 
+from stampu.utils import mkdir_recursive, rmdir
+
+from django.conf import settings
+
 
 class Renderer(object):
-    # TODO use variables on settings.py for this
-    folder = '_static'
-    clean_start = True
+    folder = getattr(settings, STAMPU_OUTPUT_DIR, '_static')
+    clean_start = getattr(settings, STAMPU_CLEAN_START, True)
 
 
 class DiskRenderer(Renderer):
@@ -27,7 +29,7 @@ class DiskRenderer(Renderer):
             self.paths.add(path)
 
     def visit(self, path):
-        print("%s ... Stampu!" % path)
+        print("_ %s" % path)
         if path not in self.revised_paths:
             response = self.client.get(path, follow=True)
             content_type = response._headers['content-type'][1].split(';')[0]
