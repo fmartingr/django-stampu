@@ -29,4 +29,12 @@ INSTALLED_APPS = (
 python manage.py stamp
 ```
 
-Your static site will be on the `_static` folder.
+Your static site will be on the `_static` folder by default.
+
+## Configuration
+
+You can use two variabes on your `settings.py` to configure stampu's behaviour:
+
+**STAMPU_CLEAN_START** default to `True` will remove the previous static folder and files before rendering again (if any).
+
+**STAMPU_FOLDER** default to `_static` is the folder your rendered site will be saved into.
